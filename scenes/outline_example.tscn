@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://dk6u11hty5mi7"]
+
+[ext_resource type="Script" uid="uid://0cemvxapwpk" path="res://outliner/scripts/camera_linker.gd" id="1_wnvcc"]
+[ext_resource type="Shader" uid="uid://dkyc4tlmrync6" path="res://outliner/shaders/outline.gdshader" id="2_3lvrq"]
+[ext_resource type="Script" uid="uid://b3fg7at0k04tr" path="res://scripts/player.gd" id="3_jdjnq"]
+[ext_resource type="Script" uid="uid://12o2ck2gs3ql" path="res://outliner/scripts/invisible_occluder.gd" id="4_lnqte"]
+[ext_resource type="Texture2D" uid="uid://bnldybqbqhu81" path="res://icon.svg" id="5_j7wk4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_50gn5"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_26sq5"]
+sky_material = SubResource("ProceduralSkyMaterial_50gn5")
+
+[sub_resource type="Environment" id="Environment_ps1a8"]
+background_mode = 2
+sky = SubResource("Sky_26sq5")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_26sq5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ps1a8"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_50gn5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wnvcc"]
+albedo_texture = ExtResource("5_j7wk4")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dg3wh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mojew"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kver8"]
+transparency = 1
+albedo_color = Color(0.4627451, 1, 1, 0.44705883)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ps1a8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26sq5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wf0p8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_811dk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dg3wh"]
+shader = ExtResource("2_3lvrq")
+shader_parameter/outline_color = Color(1, 0.8, 0, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/transparency_tolerance = 0.10000000475
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_50gn5"]
+viewport_path = NodePath("OutlineLayer/OutlineViewport")
+
+[node name="Node3D" type="Node3D" unique_id=758008257]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1937003710]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=517688689]
+environment = SubResource("Environment_ps1a8")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=441391416 node_paths=PackedStringArray("head", "camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 2)
+script = ExtResource("3_jdjnq")
+mouseSens = Vector2(0.004, 0.004)
+head = NodePath("Head")
+camera = NodePath("Head/Camera3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=14503210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_26sq5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1891623034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ps1a8")
+
+[node name="Head" type="Node3D" parent="CharacterBody3D" unique_id=1916473944]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head" unique_id=1082060071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3999999, -1.4156103e-07)
+cull_mask = 1048573
+
+[node name="OutlineObjects" type="Node3D" parent="." unique_id=356438961]
+
+[node name="Cylinder" type="MeshInstance3D" parent="OutlineObjects" unique_id=1896964656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20000005, 0.2, -4.1)
+layers = 3
+mesh = SubResource("CylinderMesh_50gn5")
+
+[node name="Plane" type="MeshInstance3D" parent="OutlineObjects" unique_id=2116053546]
+transform = Transform3D(0.9238795, 0.270598, 0.270598, 0, 0.70710677, -0.70710677, -0.3826834, 0.65328157, 0.65328157, -3.3000002, 0.90000004, -3.1000001)
+layers = 3
+material_override = SubResource("StandardMaterial3D_wnvcc")
+mesh = SubResource("PlaneMesh_dg3wh")
+
+[node name="Block" type="MeshInstance3D" parent="OutlineObjects" unique_id=1507380244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1999999, 0.49999997, -2)
+layers = 3
+mesh = SubResource("BoxMesh_mojew")
+surface_material_override/0 = SubResource("StandardMaterial3D_kver8")
+
+[node name="Block2" type="MeshInstance3D" parent="OutlineObjects" unique_id=798917874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4999998, 0.49999997, 0.6)
+layers = 2
+mesh = SubResource("BoxMesh_mojew")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="OutlineObjects" unique_id=371541234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.15, 1.25, 3.2)
+layers = 3
+size = Vector3(2.5, 2.5, 1)
+
+[node name="OccludedObjects" type="Node3D" parent="." unique_id=141656659]
+
+[node name="Wall" type="MeshInstance3D" parent="OccludedObjects" unique_id=1688794933]
+transform = Transform3D(-1.3113416e-07, 0, -1, 0, 3, 0, 3, 0, -4.371139e-08, -0.099999905, 1.5, 2)
+mesh = SubResource("BoxMesh_ps1a8")
+surface_material_override/0 = SubResource("StandardMaterial3D_26sq5")
+script = ExtResource("4_lnqte")
+
+[node name="Floor" type="MeshInstance3D" parent="OccludedObjects" unique_id=81230298]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_wf0p8")
+script = ExtResource("4_lnqte")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="OccludedObjects/Floor" unique_id=344251540]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OccludedObjects/Floor/StaticBody3D" unique_id=2007307444]
+shape = SubResource("BoxShape3D_811dk")
+
+[node name="OutlineLayer" type="CanvasLayer" parent="." unique_id=33022509]
+
+[node name="OutlineViewport" type="SubViewport" parent="OutlineLayer" unique_id=2044803554]
+transparent_bg = true
+size = Vector2i(1600, 900)
+
+[node name="OutlineCamera" type="Camera3D" parent="OutlineLayer/OutlineViewport" unique_id=669487966 node_paths=PackedStringArray("main_camera")]
+cull_mask = 1047554
+script = ExtResource("1_wnvcc")
+main_camera = NodePath("../../../CharacterBody3D/Head/Camera3D")
+
+[node name="OutlineDisplay" type="TextureRect" parent="OutlineLayer" unique_id=1271412365]
+material = SubResource("ShaderMaterial_dg3wh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_50gn5")
