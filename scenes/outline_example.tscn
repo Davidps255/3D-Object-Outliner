@@ -47,8 +47,9 @@ albedo_color = Color(0.4627451, 1, 1, 0.44705883)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dg3wh"]
 shader = ExtResource("2_3lvrq")
 shader_parameter/outline_color = Color(1, 0.8, 0, 1)
-shader_parameter/outline_width = 2.0
+shader_parameter/outline_width = 10.0
 shader_parameter/transparency_tolerance = 0.10000000475
+shader_parameter/fade = true
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_50gn5"]
 viewport_path = NodePath("OutlineLayer/OutlineViewport")
@@ -137,6 +138,7 @@ transparent_bg = true
 size = Vector2i(1600, 900)
 
 [node name="OutlineCamera" type="Camera3D" parent="OutlineLayer/OutlineViewport" unique_id=669487966 node_paths=PackedStringArray("main_camera")]
+visible = false
 cull_mask = 1047554
 script = ExtResource("1_wnvcc")
 main_camera = NodePath("../../../CharacterBody3D/Head/Camera3D")
