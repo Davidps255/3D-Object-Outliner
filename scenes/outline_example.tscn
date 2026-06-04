@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://0cemvxapwpk" path="res://outliner/scripts/camera_linker.gd" id="1_wnvcc"]
 [ext_resource type="Shader" uid="uid://dkyc4tlmrync6" path="res://outliner/shaders/outline.gdshader" id="2_3lvrq"]
+[ext_resource type="Script" uid="uid://hnluri4m6dun" path="res://outliner/scripts/occluder_parent.gd" id="3_3lvrq"]
 [ext_resource type="Script" uid="uid://b3fg7at0k04tr" path="res://scripts/player.gd" id="3_jdjnq"]
-[ext_resource type="Script" uid="uid://12o2ck2gs3ql" path="res://outliner/scripts/invisible_occluder.gd" id="4_lnqte"]
 [ext_resource type="Texture2D" uid="uid://bnldybqbqhu81" path="res://icon.svg" id="5_j7wk4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_50gn5"]
@@ -114,17 +114,16 @@ layers = 3
 size = Vector3(2.5, 2.5, 1)
 
 [node name="OccludedObjects" type="Node3D" parent="." unique_id=141656659]
+script = ExtResource("3_3lvrq")
 
 [node name="Wall" type="MeshInstance3D" parent="OccludedObjects" unique_id=1688794933]
 transform = Transform3D(-1.3113416e-07, 0, -1, 0, 3, 0, 3, 0, -4.371139e-08, -0.099999905, 1.5, 2)
 mesh = SubResource("BoxMesh_ps1a8")
 surface_material_override/0 = SubResource("StandardMaterial3D_26sq5")
-script = ExtResource("4_lnqte")
 
 [node name="Floor" type="MeshInstance3D" parent="OccludedObjects" unique_id=81230298]
 transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_wf0p8")
-script = ExtResource("4_lnqte")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="OccludedObjects/Floor" unique_id=344251540]
 
