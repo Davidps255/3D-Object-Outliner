@@ -51,6 +51,7 @@ shader_parameter/outline_color = Color(1, 0.8, 0, 1)
 shader_parameter/outline_width = 10.0
 shader_parameter/transparency_tolerance = 0.10000000475
 shader_parameter/fade = true
+shader_parameter/rounded = true
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_50gn5"]
 viewport_path = NodePath("OutlineLayer/OutlineViewport")
